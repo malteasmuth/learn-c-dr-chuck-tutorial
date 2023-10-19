@@ -17,20 +17,41 @@
 
 #define MAXLENGTH 10
 
-int read_line(char line[]){
+int read_line(char line[], int length){
 
   int input;
-  int i;
+  int i = 0;
 
-  while((input = getchar()) != EOF && input != '\n'){
+  while((input = getchar()) != EOF && input != '\n' && i <= length - 1){
 
-    line[i] = input;
+    if(i == 0 && (input == '\t' || input == ' ')){
+      ;
+    }
+
+    else{
+      line[i] = input;
+      ++i;
+    }
   }
 
+  if(line[i-1] == '\t' || line[i-1] == ' '){
+    line[i-1] = '\0';
+  }
 
+  else{
+    line[i] = '\0';
+  }
+
+  return i;
 }
 
 int main() {
 
+  int maxlength = MAXLENGTH;
+  char currentLine[MAXLENGTH];
+  int len, i;
 
+  while((len = read_line(currentLine, maxlength)) > 0){
+    printf("%s", currentLine);
+  }
 }
