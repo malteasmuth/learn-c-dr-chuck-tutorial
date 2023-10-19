@@ -3,8 +3,8 @@ Use it to write a program which reverses its input a line at a time.*/
 
 /*Pseudocode
   1. get a line of input and store it in array s
-  2. write a function reverse that takes s and transformes the array
-  3.
+  2. write a function reverse that takes s, writes each letter backwords into reversed[]
+  3. careful with '/0'
 
 */
 
@@ -15,39 +15,39 @@ Use it to write a program which reverses its input a line at a time.*/
 
 int reverse(char string[], int len){
 
-  printf("running");
-
   int i;
   int k = 0;
   char reversed[len];
 
-  for(i = len; i >= 0; i--){
+  for(i = len-1; i >= 0; i--){
+
     reversed[k] = string[i];
     k++;
   }
 
-  for(i = 0; i <= len; i++){
+  for(i = 0; i < len; i++){
     string[i] = reversed[i];
   }
 
-  printf("still running\n");
-  printf("%s", string);
-
   string[i] = '\0';
+
   return 0;
 }
 
 int getLine(char line[], int len){
 
   int input;
-  int i = 0;
+  int i;
 
-  while((input = getchar()) != EOF && input != '\n'){
+  for(i = 0; i < MAXLENGTH-1 && (input = getchar()) != EOF && input != '\n'; ++i){
+
     line[i] = input;
-    i++;
+
+    if(input == '\n'){
+      line[i] == '\0';
+    }
   }
-  
-  printf("%d", i);
+
   return i;
 }
 
@@ -57,7 +57,6 @@ int main(){
   int sLength;
 
   while((sLength = getLine(s, MAXLENGTH)) > 0){
-    printf("%d", sLength);
     reverse(s, sLength);
     printf("%s\n", s);
   }
